@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/core/routes_manger.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -6,15 +7,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Note App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text('Welcome to Note App!'),
-        ),
-      )
+      onGenerateRoute: RoutesManger.onGenerateRoute,
+      initialRoute: RoutesName.onBoardingScreenRoute,
     );
   }
 }
