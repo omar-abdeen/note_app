@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/core/widgets/route_not_found.dart';
+import 'package:note_app/features/home/screens/home_screen.dart';
 import 'package:note_app/features/onBoarding/screens/on_boarding_screen.dart';
 
 class RoutesManger {
@@ -8,6 +9,8 @@ class RoutesManger {
     switch (settings.name) {
       case RoutesName.onBoardingScreenRoute:
         return MaterialPageRoute(builder: (context) => OnBoardingScreen());
+      case RoutesName.homeScreenRoute:
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       default:
         return MaterialPageRoute(
           builder: (context) => const RouteNotFoundWidget(),
@@ -19,4 +22,5 @@ class RoutesManger {
 class RoutesName {
   RoutesName._();
   static const String onBoardingScreenRoute = '/';
+  static const String homeScreenRoute = '/homeScreen';
 }
