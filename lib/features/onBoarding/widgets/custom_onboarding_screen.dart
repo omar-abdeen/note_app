@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:note_app/controller/onboarding/on_boarding_controller.dart';
 import 'package:note_app/core/resources/color_manger.dart';
 import 'package:note_app/core/resources/const_value.dart';
 import 'package:note_app/core/resources/image_manger.dart';
 import 'package:note_app/core/resources/routes_manger.dart';
 import 'package:note_app/core/widgets/custom_bottom.dart';
 
-class CustomOnBoardingScreen extends StatelessWidget {
+class CustomOnBoardingScreen extends StatefulWidget {
   const CustomOnBoardingScreen({super.key});
 
+  @override
+  State<CustomOnBoardingScreen> createState() => _CustomOnBoardingScreenState();
+}
+
+class _CustomOnBoardingScreenState extends State<CustomOnBoardingScreen> {
+  late OnBoardingController _onBoardingController;
+  @override
+  void initState() {
+    super.initState();
+    _onBoardingController = OnBoardingController();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -48,7 +60,7 @@ class CustomOnBoardingScreen extends StatelessWidget {
           SizedBox(height: 50.h),
           CustomBottom(
             onTap: () {
-              Navigator.pushNamed(context, RoutesName.homeScreenRoute);
+              _onBoardingController.goHomeScreen(context, RoutesName.homeScreenRoute);
             },
             Width: 75.w,
             Height: 75.h,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:note_app/core/resources/color_manger.dart';
 import 'package:note_app/core/resources/const_value.dart';
 import 'package:note_app/core/resources/image_manger.dart';
 import 'package:note_app/core/widgets/custom_bottom.dart';

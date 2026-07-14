@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Note App',
-        theme: ThemeData(primarySwatch: Colors.red),
+        theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: Colors.white,
+        ),
         onGenerateRoute: RoutesManger.onGenerateRoute,
         initialRoute: RoutesName.onBoardingScreenRoute,
       ),
