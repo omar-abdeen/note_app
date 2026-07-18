@@ -12,7 +12,12 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBarNewScreen(),
+      appBar:  CustomAppBarNewScreen(
+        onPressedBack: () {
+          Navigator.pop(context);
+        },
+        onPressedAtMark: () {},
+      ),
       // body: SafeArea(
       //   child: Column(
       //     children: [

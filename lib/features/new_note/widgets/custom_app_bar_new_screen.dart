@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:note_app/core/resources/color_manger.dart';
 import 'package:note_app/core/resources/const_value.dart';
-class CustomAppBarNewScreen extends StatefulWidget implements PreferredSizeWidget {
+
+class CustomAppBarNewScreen extends StatelessWidget
+    implements PreferredSizeWidget {
   const CustomAppBarNewScreen({
     super.key,
+    required this.onPressedBack,
+    required this.onPressedAtMark,
   });
 
-  @override
-  State<CustomAppBarNewScreen> createState() => _CustomAppBarNewScreenState();
+  final VoidCallback onPressedBack;
+  final VoidCallback onPressedAtMark;
 
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _CustomAppBarNewScreenState extends State<CustomAppBarNewScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -24,8 +22,7 @@ class _CustomAppBarNewScreenState extends State<CustomAppBarNewScreen> {
         Padding(
           padding: const EdgeInsets.only(right: 30),
           child: ElevatedButton(
-            onPressed: () {},
-
+            onPressed: onPressedAtMark,
             style: ElevatedButton.styleFrom(
               minimumSize: Size(33.sp, 33.sp),
               backgroundColor: ColorManger.kPrimaryColor,
@@ -50,9 +47,7 @@ class _CustomAppBarNewScreenState extends State<CustomAppBarNewScreen> {
             color: ColorManger.kPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: onPressedBack,
         ),
       ),
       title: Padding(
@@ -69,4 +64,8 @@ class _CustomAppBarNewScreenState extends State<CustomAppBarNewScreen> {
       ),
     );
   }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
