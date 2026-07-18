@@ -20,8 +20,10 @@ class CustomBottom extends StatelessWidget {
   final AlignmentGeometry alignment;
   final Offset offset;
   final double blurRadius;
+
   // ignore: non_constant_identifier_names
   final double Width;
+
   // ignore: non_constant_identifier_names
   final double Height;
 
