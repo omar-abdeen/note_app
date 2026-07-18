@@ -6,4 +6,5 @@ class ConstValue {
   static const String fontFamily = 'Otama';
   static const String appTitle = 'Notes';
   static const String appSubTitle = 'Create your first note !';
+  static const String Back = 'Back';
 }
