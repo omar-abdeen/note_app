@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/controller/new_note_controller/new_note_controller.dart';
 import 'package:note_app/features/new_note/widgets/custom_app_bar_new_screen.dart';
-import 'package:note_app/features/new_note/widgets/custom_new_note_screen_write.dart';
+import 'package:note_app/features/new_note/widgets/custom_text_filed_desc_note.dart';
+import 'package:note_app/features/new_note/widgets/custom_text_filed_title_note.dart';
 
 class NewNoteScreen extends StatefulWidget {
   const NewNoteScreen({super.key});
@@ -10,17 +12,33 @@ class NewNoteScreen extends StatefulWidget {
 }
 
 class _NewNoteScreenState extends State<NewNoteScreen> {
+  late NewNoteController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = NewNoteController(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarNewScreen(
-        onPressedBack: () {
-          Navigator.pop(context);
-        },
+        onPressedBack: _controller.goBack,
         onPressedAtMark: () {},
       ),
       body: SafeArea(
-        child: CustomNewNoteScreenWrite(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Form(
+            child: Column(
+              children: [
+                CustomTextFiledTitleNote(),
+                Expanded(child: CustomTextFiledDescNote()),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
