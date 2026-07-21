@@ -4,12 +4,13 @@ import 'package:note_app/core/resources/color_manger.dart';
 
 class CustomTextFiledTitleNote extends StatelessWidget {
   const CustomTextFiledTitleNote({
-    super.key,
+    super.key, required this.titlecontroller,
   });
-
+  final TextEditingController titlecontroller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: titlecontroller,
       style: TextStyle(
         color: ColorManger.kBlackColor,
         fontSize: 48.sp,

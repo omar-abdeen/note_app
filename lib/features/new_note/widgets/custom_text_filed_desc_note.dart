@@ -4,12 +4,13 @@ import 'package:note_app/core/resources/color_manger.dart';
 
 class CustomTextFiledDescNote extends StatelessWidget {
   const CustomTextFiledDescNote({
-    super.key,
+    super.key, required this.desccontroller,
   });
-
+  final TextEditingController desccontroller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: desccontroller,
       style: TextStyle(
         color: ColorManger.kBlackColor,
         fontSize: 23.sp,

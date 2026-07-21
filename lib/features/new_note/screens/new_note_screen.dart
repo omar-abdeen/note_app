@@ -19,24 +19,34 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
     super.initState();
     _controller = NewNoteController(context);
   }
+  @override
+  void dispose() {
+    _controller.disposeController();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarNewScreen(
         onPressedBack: _controller.goBack,
-        onPressedAtMark: () {},
+        onPressedAtMark: () {
+          _controller.onTapAtMark();
+        },
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Form(
-            child: Column(
-              children: [
-                CustomTextFiledTitleNote(),
-                Expanded(child: CustomTextFiledDescNote()),
-              ],
-            ),
+          child: Column(
+            children: [
+              CustomTextFiledTitleNote(
+                titlecontroller: _controller.titlecontroller,
+              ),
+              Expanded(child: CustomTextFiledDescNote(
+                desccontroller: _controller.desccontroller,
+              )),
+            ],
           ),
         ),
       ),
