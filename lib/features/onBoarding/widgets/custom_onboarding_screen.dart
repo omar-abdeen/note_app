@@ -23,58 +23,69 @@ class _CustomOnBoardingScreenState extends State<CustomOnBoardingScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0).r,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            ImageManger.kOnBoardingImage,
-            width: 375.w,
-            height: 231.h,
-          ),
-          SizedBox(height: 40.h),
-          Text(
-            textAlign: TextAlign.center,
-            ConstValue.onBoardingScreenTitle,
-            style: TextStyle(
-              fontSize: 48.sp,
-              fontWeight: FontWeight.w400,
-              fontFamily: ConstValue.fontFamily,
-              color: ColorManger.kPrimaryColor,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0).r,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    ImageManger.kOnBoardingImage,
+                    width: 375.w,
+                    height: 231.h,
+                  ),
+                  SizedBox(height: 40.h),
+                  Text(
+                    ConstValue.onBoardingScreenTitle,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 48.sp,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: ConstValue.fontFamily,
+                      color: ColorManger.kPrimaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    ConstValue.onBoardingScreenSubTitle,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: ConstValue.fontFamily,
+                      color: ColorManger.kLightGreyColor,
+                    ),
+                  ),
+                  SizedBox(height: 50.h),
+                  CustomBottom(
+                    onTap: () {
+                      _onBoardingController.goHomeScreen(
+                        context,
+                        RoutesName.homeScreenRoute,
+                      );
+                    },
+                    Width: 75.w,
+                    Height: 75.h,
+                    offset: const Offset(0, 0),
+                    blurRadius: 0,
+                    icon: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 22.sp,
+                    ),
+                    alignment: Alignment.center,
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(height: 10.h),
-
-          Text(
-            textAlign: TextAlign.center,
-            ConstValue.onBoardingScreenSubTitle,
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-              fontFamily: ConstValue.fontFamily,
-              color: ColorManger.kLightGreyColor,
-            ),
-          ),
-          SizedBox(height: 50.h),
-          CustomBottom(
-            onTap: () {
-              _onBoardingController.goHomeScreen(context, RoutesName.homeScreenRoute);
-            },
-            Width: 75.w,
-            Height: 75.h,
-            offset: const Offset(0, 0),
-            blurRadius: 0,
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-              size: 22.sp,
-            ),
-            alignment: Alignment.center,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
