@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor:ColorManger.kWhiteColor,
         ),
         onGenerateRoute: RoutesManger.onGenerateRoute,
-        initialRoute: RoutesName.onBoardingScreenRoute,
+        initialRoute: RoutesName.homeScreenRoute,
       ),
     );
   }

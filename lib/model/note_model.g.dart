@@ -17,11 +17,11 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return NoteModel(
-      fields[0] as int,
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as bool,
+      id: fields[0] as int,
+      title: fields[1] as String,
+      description: fields[2] as String,
+      dateTime: fields[3] as String,
+      done: fields[4] as bool,
     );
   }
 

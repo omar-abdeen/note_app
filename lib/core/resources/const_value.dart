@@ -8,7 +8,10 @@ class ConstValue {
   static const String appTitle = 'Notes';
   static const String appSubTitle = 'Create your first note !';
   static const String Back = 'Back';
-  static const String shouldAddTitleAndDescription = 'Should add title and description';
+  static const String NoteBox = 'NoteBox';
+  static const String IDNoteBox = 'IDNoteBox';
+  static const String shouldAddTitleAndDescription =
+      'Should add title and description';
   static const String toSave = 'To save';
   static const String kDelete = 'Delete';
   static const String kOk = 'Ok';
