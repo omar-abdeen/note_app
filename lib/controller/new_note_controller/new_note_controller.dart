@@ -33,7 +33,7 @@ class NewNoteController {
     _editStatusController = StreamController();
     _inputEditStatus = _editStatusController.sink;
     outPutEditStatus = _editStatusController.stream.asBroadcastStream();
-    
+
     // Default to true for new notes so the user can type immediately
     editStatus = true;
     _inputEditStatus.add(editStatus);
@@ -48,30 +48,40 @@ class NewNoteController {
     Navigator.of(context).pop();
   }
 
-  void onTapAtMark() {
-    if (noteModel == null) {
-      addNewNote();
+  Future<void> onTapAtMark() async {
+    if (titlecontroller.text.trim().isEmpty &&
+        desccontroller.text.trim().isEmpty) {
+      showBottomSheet();
     } else {
-      if (editStatus == true) {
-        addNewThisNote();
+      if (noteModel == null) {
+        await addNewNoteHive();
+        goBack();
       } else {
-        showAlertEditORDeleteNoteBottomSheet();
+        if (editStatus == true) {
+          await editNoteHive();
+        } else {
+          showAlertEditORDeleteNoteBottomSheet();
+        }
       }
     }
   }
 
   void addNewNote() {
-    showBottomSheet();
-  }
-  void addNewThisNote() {
-
-    if (titlecontroller.text.trim().isEmpty || desccontroller.text.isEmpty) {
-      //requiredData += "Title and description are required\n";
+    if (titlecontroller.text.trim().isEmpty &&
+        desccontroller.text.trim().isEmpty) {
       showBottomSheet();
-    } else {
-      editNoteHive();
     }
   }
+
+  void addNewThisNote() async {
+    if (titlecontroller.text.trim().isEmpty &&
+        desccontroller.text.trim().isEmpty) {
+      showBottomSheet();
+    } else {
+      await editNoteHive();
+    }
+  }
+
   Future<int> getIdDefulteNote() async {
     HiveHelper<int> hiveHelper = HiveHelper<int>(ConstValue.IDNoteBox);
     int? id = await hiveHelper.getValue(key: 'id');
@@ -101,6 +111,7 @@ class NewNoteController {
     editStatus = false;
     _inputEditStatus.add(editStatus);
   }
+
   Future<void> editNoteHive() async {
     NoteModel noteMode = NoteModel(
       id: noteModel!.id,
@@ -113,7 +124,6 @@ class NewNoteController {
       ConstValue.NoteBox,
     );
     await hiveHelper.addValue(key: noteModel!.id.toString(), value: noteMode);
-    await getIDDefulteNote(noteModel!.id);
     editStatus = false;
     _inputEditStatus.add(editStatus);
   }
@@ -166,10 +176,20 @@ class NewNoteController {
     Navigator.of(context).pop();
   }
 
-  void onTapAtOkButton() {
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-    addNewNoteHive();
+  Future<void> onTapAtOkButton() async {
+    if (titlecontroller.text.trim().isEmpty &&
+        desccontroller.text.trim().isEmpty) {
+      // Just close the warning, don't save empty note
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      if (noteModel == null) {
+        await addNewNoteHive();
+      } else {
+        await editNoteHive();
+      }
+    }
   }
 
   void onPressedClosed() {
