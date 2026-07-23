@@ -14,4 +14,11 @@ class ColorManger {
   static const Color kDarkGreyColor = Color(0xff828282);
   static const Color kGrey2Color = Color(0xffEFEEF0);
   static const Color kGrey3Color = Color(0xff827D89);
+  static const List<Color> listColorNotes = [
+    Color(0xff021815),
+    Color(0xff224F06),
+    Color(0xff526E48),
+    Color(0xff4C4B16),
+    ColorManger.kPrimaryColor,
+  ];
 }

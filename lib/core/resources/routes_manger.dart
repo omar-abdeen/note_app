@@ -9,14 +9,15 @@ class RoutesManger {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutesName.onBoardingScreenRoute:
-        return MaterialPageRoute(builder: (context) => OnBoardingScreen());
+        return MaterialPageRoute(builder: (context) => OnBoardingScreen(),settings: settings,);
       case RoutesName.homeScreenRoute:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomeScreen(),settings: settings,);
       case RoutesName.newNoteScreenRoute:
-        return MaterialPageRoute(builder: (context) => const NewNoteScreen());
+        return MaterialPageRoute(builder: (context) => const NewNoteScreen(),settings: settings,);
       default:
         return MaterialPageRoute(
-          builder: (context) => const RouteNotFoundWidget(),
+          builder: (context) =>  RouteNotFoundWidget(),
+          settings: settings,
         );
     }
   }

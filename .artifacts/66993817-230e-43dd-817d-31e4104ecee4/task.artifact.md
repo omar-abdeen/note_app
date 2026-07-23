@@ -1,0 +1,6 @@
+- [x] Sync `NewNoteController` between Screen and AppBar
+    - [x] Update `CustomAppBarNewScreen` to accept controller
+    - [x] Update `NewNoteScreen` to pass controller
+- [x] Fix Icon Logic in `CustomAppBarNewScreen`
+- [x] Update `NewNoteController` to reset edit status after save
+- [x] Verify changes

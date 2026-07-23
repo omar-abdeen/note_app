@@ -28,8 +28,11 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.getArgumentNote();
     return Scaffold(
       appBar: CustomAppBarNewScreen(
+        controller: _controller,
+        editNow: _controller.editStatus,
         onPressedBack: _controller.goBack,
         onPressedAtMark: () {
           _controller.onTapAtMark();
@@ -38,15 +41,22 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              CustomTextFiledTitleNote(
-                titlecontroller: _controller.titlecontroller,
-              ),
-              Expanded(child: CustomTextFiledDescNote(
-                desccontroller: _controller.desccontroller,
-              )),
-            ],
+          child: StreamBuilder<bool?>(
+            stream: _controller.outPutEditStatus,
+            builder: (context, snapshot) {
+              return Column(
+                children: [
+                  CustomTextFiledTitleNote(
+                   active: snapshot.data,
+                    titlecontroller: _controller.titlecontroller,
+                  ),
+                  Expanded(child: CustomTextFiledDescNote(
+                    active: snapshot.data,
+                    desccontroller: _controller.desccontroller,
+                  )),
+                ],
+              );
+            }
           ),
         ),
       ),

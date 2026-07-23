@@ -57,20 +57,20 @@ class CustomAlertEditOrDeleteNote extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: 41.w),
+              SizedBox(width: 50.w),
               SizedBox(
-                width: 16.w,
-                height: 16.h,
+                width: 20.w,
+                height: 20.h,
                 child: IconButton.filled(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: Size(20.w, 20.h),
                     backgroundColor: ColorManger.kGrey2Color,
                   ),
-                  onPressed:  onPressedClosed,
+                  onPressed: onPressedClosed,
                   icon: Icon(
                     Icons.close,
-                    size: 8.sp,
+                    size: 13.sp,
                     color: ColorManger.kGrey3Color,
                   ),
                   color: ColorManger.kWhiteColor,
@@ -85,13 +85,9 @@ class CustomAlertEditOrDeleteNote extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomOkButton(
-                onTapAtEditButton:  onTapAtEditButton,
-              ),
+              CustomOkButton(onTapAtEditButton: onTapAtEditButton),
               SizedBox(width: 33.w),
-              CustomDeleteButton(
-                onTapAtDeleteButton:  onTapAtDeleteButton,
-              ),
+              CustomDeleteButton(onTapAtDeleteButton: onTapAtDeleteButton),
             ],
           ),
           SizedBox(height: 16.h),
@@ -109,7 +105,7 @@ class CustomDeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:  onTapAtDeleteButton,
+      onTap: onTapAtDeleteButton,
       child: Column(
         children: [
           Icon(CupertinoIcons.delete, color: Colors.red),
@@ -136,7 +132,7 @@ class CustomOkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:onTapAtEditButton,
+      onTap: onTapAtEditButton,
       child: Column(
         children: [
           Icon(CupertinoIcons.pencil_circle, color: ColorManger.kPrimaryColor),
