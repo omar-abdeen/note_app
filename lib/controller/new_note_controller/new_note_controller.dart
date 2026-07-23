@@ -49,13 +49,13 @@ class NewNoteController {
   }
 
   Future<void> onTapAtMark() async {
-    if (titlecontroller.text.trim().isEmpty &&
-        desccontroller.text.trim().isEmpty) {
+    if (noteModel == null) {
+      // For new notes, always show the bottom sheet for confirmation
       showBottomSheet();
     } else {
-      if (noteModel == null) {
-        await addNewNoteHive();
-        goBack();
+      if (titlecontroller.text.trim().isEmpty &&
+          desccontroller.text.trim().isEmpty) {
+        showBottomSheet();
       } else {
         if (editStatus == true) {
           await editNoteHive();
@@ -182,13 +182,13 @@ class NewNoteController {
       // Just close the warning, don't save empty note
       Navigator.of(context).pop();
     } else {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
       if (noteModel == null) {
         await addNewNoteHive();
       } else {
         await editNoteHive();
       }
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
     }
   }
 
