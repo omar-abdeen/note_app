@@ -1,36 +1,29 @@
-# Implementation Plan - Dynamic Text Color Selection
+# خطة التنفيذ - تكبير أيقونة شاشة البداية (Splash Screen)
 
-Add the ability for users to choose the text color while writing a new note. This will include a color picker in the AppBar and updating the text fields to reflect the selected color.
+الهدف هو جعل أيقونة التطبيق تظهر بحجم أكبر أثناء شاشة التحميل (التي تظهر عند فتح التطبيق) في نظام أندرويد.
 
-## User Review Required
+## ملاحظات للمراجعة
 
 > [!IMPORTANT]
-> - I will add a row of color selection circles in the `CustomAppBarNewScreen`.
-> - This color will apply to both the **Title** and **Description** text.
-> - For now, this color will be session-based (UI state). If you want this color to be **saved** permanently with each note in the database, please let me know, as it would require updating the `NoteModel` and the database schema.
+> - سأقوم بتفعيل الأيقونة في ملفات الخلفية الخاصة بنظام أندرويد.
+> - سأقوم بتحديد مقاس معين (مثلاً 200dp) لضمان ظهور الأيقونة بحجم أكبر من الحجم الافتراضي الصغير.
+> - هذا التعديل خاص بنظام أندرويد. إذا كنت تلاحظ نفس المشكلة في آيفون (iOS)، يرجى إخباري.
 
-## Proposed Changes
+## التغييرات المقترحة
 
-### [New Note Feature]
+### [موارد أندرويد - Android Resources]
 
-#### [MODIFY] [NewNoteController](file:///E:/note_app/lib/controller/new_note_controller/new_note_controller.dart)
-- Add `Color selectedTextColor`.
-- Add a `StreamController<Color>` to manage and broadcast text color changes.
-- Add `updateTextColor(Color color)` method.
+#### [تعديل] [launch_background.xml](file:///E:/note_app/android/app/src/main/res/drawable/launch_background.xml)
+#### [تعديل] [launch_background.xml](file:///E:/note_app/android/app/src/main/res/drawable-v21/launch_background.xml)
+- تفعيل الكود الخاص بالأيقونة (Uncomment).
+- ضبط الأبعاد لتكون أكبر (مثلاً 200dp) مع التأكد من بقائها في المنتصف (Gravity center).
 
-#### [MODIFY] [CustomAppBarNewScreen](file:///E:/note_app/lib/features/new_note/widgets/custom_app_bar_new_screen.dart)
-- Add a horizontal list of color options (e.g., using `ListView` or `Row`) in the `actions` or below the `title`.
-- Each color circle will call `controller.updateTextColor(color)` when tapped.
+#### [تعديل] [styles.xml](file:///E:/note_app/android/app/src/main/res/values/styles.xml)
+- إضافة إعدادات لضمان التوافق مع الإصدارات الحديثة من أندرويد (Android 12+) لضمان ظهور الأيقونة بالحجم المطلوب.
 
-#### [MODIFY] [NewNoteScreen](file:///E:/note_app/lib/features/new_note/screens/new_note_screen.dart)
-- Wrap the text fields in another `StreamBuilder` that listens to `outPutTextColor`.
+## خطة التحقق
 
-#### [MODIFY] [CustomTextFiledTitleNote](file:///E:/note_app/lib/features/new_note/widgets/custom_text_filed_title_note.dart) & [CustomTextFiledDescNote](file:///E:/note_app/lib/features/new_note/widgets/custom_text_filed_desc_note.dart)
-- Accept a `Color textColor` parameter and use it in the `TextStyle`.
-
-## Verification Plan
-
-### Manual Verification
-- Open the New Note screen.
-- Tap different color circles in the AppBar.
-- Verify that the text color of the Title and Description changes immediately.
+### التحقق اليدوي
+- تشغيل التطبيق على المحاكي أو جهاز حقيقي.
+- ملاحظة شاشة البداية (الشاشة البيضاء قبل ظهور الملاحظات).
+- التأكد من أن الأيقونة واضحة وبحجم أكبر بشكل ملحوظ.

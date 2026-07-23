@@ -1,5 +1,5 @@
-- [x] Update `NewNoteController` for text color management
-- [x] Add color picker to `CustomAppBarNewScreen`
-- [x] Update `CustomTextFiledTitleNote` and `CustomTextFiledDescNote` to accept color
-- [x] Connect color state in `NewNoteScreen`
-- [x] Verify functionality
+- [x] تحديث ملفات خلفية شاشة البداية (Splash Screen)
+    - [x] تعديل `android/app/src/main/res/drawable/launch_background.xml`
+    - [x] تعديل `android/app/src/main/res/drawable-v21/launch_background.xml`
+- [x] تحديث نمط شاشة البداية في `android/app/src/main/res/values/styles.xml`
+- [x] التحقق من النتيجة

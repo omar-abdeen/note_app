@@ -1,29 +1,21 @@
-# Walkthrough - Dynamic Text Color Selection
+# جولة في التغييرات - تكبير أيقونة شاشة البداية
 
-Implemented a color selection feature in the `NewNoteScreen` that allows users to change the color of the note's Title and Description text.
+تم تعديل إعدادات أندرويد لضمان ظهور أيقونة التطبيق بحجم أكبر وأوضح عند فتح التطبيق.
 
-## Changes Made
+## التغييرات التي تمت
 
-### Color State Management
-- **[NewNoteController](file:///E:/note_app/lib/controller/new_note_controller/new_note_controller.dart)**:
-    - Added `selectedTextColor` to hold the current choice.
-    - Implemented `outPutTextColor` stream to broadcast color updates to the UI.
-    - Added `updateTextColor(Color color)` to handle user selections.
+### تعديل ملفات الخلفية (Drawable)
+- **[launch_background.xml](file:///E:/note_app/android/app/src/main/res/drawable/launch_background.xml)**: تم تفعيل ظهور الأيقونة وتحديد أبعادها بـ `200dp` لضمان ظهورها بحجم كبير في المنتصف.
+- **[launch_background.xml (v21)](file:///E:/note_app/android/app/src/main/res/drawable-v21/launch_background.xml)**: تم إجراء نفس التعديل لضمان التوافق مع إصدارات أندرويد الحديثة.
 
-### UI Integration
-- **[CustomAppBarNewScreen](file:///E:/note_app/lib/features/new_note/widgets/custom_app_bar_new_screen.dart)**:
-    - Added a `palette` icon button that opens a color picker menu.
-    - Users can now select from a predefined list of colors (Black, Red, Blue, Green, Orange, Purple).
-- **[NewNoteScreen](file:///E:/note_app/lib/features/new_note/screens/new_note_screen.dart)**:
-    - Added a nested `StreamBuilder` to listen for color changes and pass the selected color down to the text fields.
-- **Text Fields**:
-    - Updated [CustomTextFiledTitleNote](file:///E:/note_app/lib/features/new_note/widgets/custom_text_filed_title_note.dart) and [CustomTextFiledDescNote](file:///E:/note_app/lib/features/new_note/widgets/custom_text_filed_desc_note.dart) to accept and apply the dynamic `textColor`.
+### الربط مع أيقونة التطبيق
+- تم ربط شاشة البداية بـ `@mipmap/launcher_icon` لضمان استخدام نفس أيقونة التطبيق الحالية ولكن بحجم أكبر أثناء التحميل.
 
-## Verification Results
+## نتائج التحقق
 
-- [x] **Real-time Updates**: Changing the color in the AppBar immediately updates the text color in the Title and Description fields.
-- [x] **Visual Feedback**: The color picker menu provides a clear visual representation of the available colors.
-- [x] **Consistency**: The selected color is applied to both the title and the body of the note.
+- [x] **تفعيل الأيقونة**: الأيقونة لم تعد مخفية بل أصبحت جزءاً أساسياً من خلفية شاشة البداية.
+- [x] **تكبير الحجم**: تم ضبط المقاس يدوياً ليكون `200dp` وهو ضعف الحجم الافتراضي تقريباً، مما يجعلها واضحة جداً للمستخدم.
+- [x] **التمركز**: تظهر الأيقونة في منتصف الشاشة تماماً بفضل خاصية `android:gravity="center"`.
 
-> [!NOTE]
-> Currently, the color selection is per-session (not saved to the database). If you want this color to be remembered for each note, we can update the `NoteModel` next.
+> [!TIP]
+> قد يستغرق ظهور التعديلات بضع ثوانٍ عند تشغيل التطبيق لأول مرة بعد التعديل بسبب التخزين المؤقت (Cache) الخاص بالنظام.
