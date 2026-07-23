@@ -23,18 +23,27 @@ class HomeController {
   late Sink<List<NoteModel>> _inputNote;
   late Stream<List<NoteModel>> outputNote;
 
+  bool isAscending = true;
+  late StreamController<bool> _sortOrderController;
+  late Sink<bool> _inputSortOrder;
+  late Stream<bool> outputSortOrder;
+
   Future<void> initController() async {
     _controllerNote = StreamController();
     _inputNote = _controllerNote.sink;
     outputNote = _controllerNote.stream;
+
+    _sortOrderController = StreamController();
+    _inputSortOrder = _sortOrderController.sink;
+    outputSortOrder = _sortOrderController.stream.asBroadcastStream();
+    _inputSortOrder.add(isAscending);
   }
 
   Future<void> disposeController() async {
     _controllerNote.close();
     _inputNote.close();
-    // await Hive.close();
-    // await Hive.deleteBoxFromDisk(ConstValue.NoteBox);
-    // await Hive.deleteBoxFromDisk(ConstValue.IDNoteBox);
+    _sortOrderController.close();
+    _inputSortOrder.close();
   }
 
   void goNewNote(String routeName) {
@@ -44,21 +53,30 @@ class HomeController {
   }
 
   Future<void> getAllDataNote() async {
-    _inputNote.add([]);
     HiveHelper<NoteModel> hiveHelper = HiveHelper<NoteModel>(
       ConstValue.NoteBox,
     );
     Map<dynamic, NoteModel> data = await hiveHelper.getAllData();
     List<NoteModel> listData = data.values.toList();
-    listData.sort((a, b) => a.id.compareTo(b.id));
+    if (isAscending) {
+      listData.sort((a, b) => a.id.compareTo(b.id));
+    } else {
+      listData.sort((a, b) => b.id.compareTo(a.id));
+    }
     _inputNote.add(listData);
   }
 
+  void toggleSortOrder() {
+    isAscending = !isAscending;
+    _inputSortOrder.add(isAscending);
+    getAllDataNote();
+  }
+
   Future<void> onTapAtItemNote(NoteModel data) async {
-    Navigator.of(
-      context,
-    ).pushNamed(RoutesName.newNoteScreenRoute, arguments: data).then((value) async{
-     await getAllDataNote();
-    });
+    Navigator.of(context)
+        .pushNamed(RoutesName.newNoteScreenRoute, arguments: data)
+        .then((value) async {
+          await getAllDataNote();
+        });
   }
 }

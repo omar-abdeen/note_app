@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:note_app/controller/home/home_controller.dart';
 import 'package:note_app/core/resources/color_manger.dart';
 import 'package:note_app/core/resources/const_value.dart';
 import 'package:note_app/features/home/widgets/custom_empty_check_home_screen.dart';
+import 'package:note_app/features/home/widgets/custom_shimmer_loading.dart';
 import 'package:note_app/model/note_model.dart';
 
 class CustomGridViewNotesBody extends StatelessWidget {
@@ -13,10 +13,12 @@ class CustomGridViewNotesBody extends StatelessWidget {
     super.key,
     required this.outPutListNoteModel,
     required this.onTapAtNote,
+    required this.isAscending,
   });
 
   final Stream<List<NoteModel>> outPutListNoteModel;
   final void Function(NoteModel data) onTapAtNote;
+  final bool isAscending;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class CustomGridViewNotesBody extends StatelessWidget {
       stream: outPutListNoteModel,
       builder: (context, snapshot) =>
           snapshot.connectionState == ConnectionState.waiting
-          ? Center(child: CircularProgressIndicator())
+          ? CustomShimmerLoading()
           : snapshot.data == null
           ? SizedBox()
           : snapshot.data!.isEmpty
@@ -43,6 +45,9 @@ class CustomGridViewNotesBody extends StatelessWidget {
                   onTapAtNote(snapshot.data![index]);
                 },
                 child: CustomItemNote(
+                  displayIndex: isAscending
+                      ? index + 1
+                      : snapshot.data!.length - index,
                   noteModel: snapshot.data![index],
                   color: index % 5 == 0
                       ? ColorManger.listColorNotes[4]
@@ -65,10 +70,12 @@ class CustomItemNote extends StatelessWidget {
     super.key,
     required this.noteModel,
     required this.color,
+    required this.displayIndex,
   });
 
   final NoteModel noteModel;
   final Color color;
+  final int displayIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -77,27 +84,28 @@ class CustomItemNote extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.all(Radius.circular(8.r)),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 7.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // SizedBox(height: 25.h),
               SizedBox(
                 width: 46.w,
-                height: 46.w,
+                height: 53.w,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     SvgPicture.asset(
                       'assets/images/background_id.svg',
                       width: 46.w,
-                      height: 46.w,
+                      height: 55.w,
                       fit: BoxFit.contain,
                     ),
                     Text(
-                      noteModel.id.toString(),
+                      displayIndex.toString(),
                       style: TextStyle(
                         color: ColorManger.kWhiteColor,
                         fontSize: 13.sp,
@@ -112,7 +120,11 @@ class CustomItemNote extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    ElevatedButtonDoneStatus(status: noteModel.done),
+                    ElevatedButtonDoneStatus(
+                      status:
+                          noteModel.title.isNotEmpty &&
+                          noteModel.description.isNotEmpty,
+                    ),
                     SizedBox(height: 4.h),
                     Text(
                       noteModel.dateTime,
@@ -162,29 +174,36 @@ class ElevatedButtonDoneStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: status == true ? Color(0xff02463d) : Color(0xfff7dee3),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.r)),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(0, 0),
+          backgroundColor: status == true ? Color(0xff22573D): Color(0xFFF7DEE3),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.r)),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 1.h),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-      ),
-      label: Text(
-        status == true ? "Done" : "Not Done",
-        style: TextStyle(
-          fontSize: 10.sp,
-          fontFamily: ConstValue.fontFamily,
-          color: status == true ? ColorManger.kWhiteColor : Colors.red,
+        icon: Icon(
+          status == true
+              ? CupertinoIcons.checkmark_alt_circle_fill
+              : CupertinoIcons.clear_circled_solid,
+          color: status == true ? Color(0xff60D889) : Colors.red,
+          size: 18.sp,
+          weight: 1000,
+
         ),
+        label: Text(
+          status == true ? "done" : "Not done",
+          style: TextStyle(
+            fontSize: 12.sp,
+            fontFamily: ConstValue.fontFamily,
+            color: status == true ? ColorManger.kWhiteColor : Colors.red,
+          ),
+        ),
+        onPressed: () {},
       ),
-      icon: Icon(
-        status == true
-            ? CupertinoIcons.checkmark_alt_circle_fill
-            : CupertinoIcons.clear_circled_solid,
-        color: status == true ? ColorManger.kLightGreyColor : Colors.red,
-      ),
-      onPressed: () {},
     );
   }
 }

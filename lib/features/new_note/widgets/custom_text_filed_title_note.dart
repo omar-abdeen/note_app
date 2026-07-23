@@ -7,10 +7,12 @@ class CustomTextFiledTitleNote extends StatelessWidget {
     super.key,
     required this.titlecontroller,
     required this.active,
+    required this.textColor,
   });
 
   final TextEditingController titlecontroller;
   final bool? active;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,7 @@ class CustomTextFiledTitleNote extends StatelessWidget {
       enabled: active,
       controller: titlecontroller,
       style: TextStyle(
-        color: active == true
-            ? ColorManger.kBlackColor
-            : ColorManger.kLightGreyColor2,
+        color: textColor,
         fontSize: 48.sp,
         fontWeight: FontWeight.w400,
       ),

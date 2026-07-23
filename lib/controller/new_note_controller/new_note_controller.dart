@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/core/database/hive/hive_helper.dart';
+import 'package:note_app/core/resources/color_manger.dart';
 import 'package:note_app/core/resources/const_value.dart';
 import 'package:note_app/features/new_note/widgets/bottom_sheet/custom_alert_edit_or_delete_note.dart';
 import 'package:note_app/features/new_note/widgets/bottom_sheet/custom_body_model_bottom_sheet_new_note.dart';
@@ -23,6 +24,11 @@ class NewNoteController {
   late Sink<bool?> _inputEditStatus;
   late Stream<bool?> outPutEditStatus;
 
+  late StreamController<Color> _textColorController;
+  late Sink<Color> _inputTextColor;
+  late Stream<Color> outPutTextColor;
+  Color selectedTextColor = ColorManger.kLightGreyColor2;
+
   Future<void> start() async {
     await initController();
   }
@@ -34,9 +40,19 @@ class NewNoteController {
     _inputEditStatus = _editStatusController.sink;
     outPutEditStatus = _editStatusController.stream.asBroadcastStream();
 
+    _textColorController = StreamController();
+    _inputTextColor = _textColorController.sink;
+    outPutTextColor = _textColorController.stream.asBroadcastStream();
+    _inputTextColor.add(selectedTextColor);
+
     // Default to true for new notes so the user can type immediately
     editStatus = true;
     _inputEditStatus.add(editStatus);
+  }
+
+  void updateTextColor(Color color) {
+    selectedTextColor = color;
+    _inputTextColor.add(selectedTextColor);
   }
 
   Future<void> disposeController() async {
@@ -110,6 +126,8 @@ class NewNoteController {
     await getIDDefulteNote(id);
     editStatus = false;
     _inputEditStatus.add(editStatus);
+    selectedTextColor = ColorManger.kLightGreyColor2;
+    _inputTextColor.add(selectedTextColor);
   }
 
   Future<void> editNoteHive() async {
@@ -126,6 +144,8 @@ class NewNoteController {
     await hiveHelper.addValue(key: noteModel!.id.toString(), value: noteMode);
     editStatus = false;
     _inputEditStatus.add(editStatus);
+    selectedTextColor = ColorManger.kLightGreyColor2;
+    _inputTextColor.add(selectedTextColor);
   }
 
   void showAlertEditORDeleteNoteBottomSheet() {
@@ -213,5 +233,3 @@ class NewNoteController {
     _inputEditStatus.add(editStatus);
   }
 }
-
-void editNote() {}

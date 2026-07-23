@@ -1,0 +1,5 @@
+- [x] Update `NewNoteController` for text color management
+- [x] Add color picker to `CustomAppBarNewScreen`
+- [x] Update `CustomTextFiledTitleNote` and `CustomTextFiledDescNote` to accept color
+- [x] Connect color state in `NewNoteScreen`
+- [x] Verify functionality

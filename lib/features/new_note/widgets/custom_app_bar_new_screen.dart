@@ -61,6 +61,25 @@ class _CustomAppBarNewScreenState extends State<CustomAppBarNewScreen> {
                 ),
               ),
             ),
+            StreamBuilder<Color>(
+              stream: widget.controller.outPutTextColor,
+              builder: (context, colorSnapshot) {
+                return PopupMenuButton<Color>(
+                  icon: Icon(Icons.palette, color: ColorManger.kPrimaryColor),
+                  onSelected: (color) {
+                    widget.controller.updateTextColor(color);
+                  },
+                  itemBuilder: (context) => [
+                    _buildColorItem(Colors.black),
+                    _buildColorItem(Colors.red),
+                    _buildColorItem(Colors.blue),
+                    _buildColorItem(Colors.green),
+                    _buildColorItem(Colors.orange),
+                    _buildColorItem(Colors.purple),
+                  ],
+                );
+              },
+            ),
           ],
           leading: Padding(
             padding: const EdgeInsets.only(left: 30),
@@ -87,6 +106,21 @@ class _CustomAppBarNewScreenState extends State<CustomAppBarNewScreen> {
           ),
         );
       },
+    );
+  }
+
+  PopupMenuItem<Color> _buildColorItem(Color color) {
+    return PopupMenuItem(
+      value: color,
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.grey),
+        ),
+      ),
     );
   }
 }

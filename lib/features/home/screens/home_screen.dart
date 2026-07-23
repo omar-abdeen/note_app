@@ -37,6 +37,25 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: ColorManger.kWhiteColor,
         automaticallyImplyLeading: false,
+        actions: [
+          StreamBuilder<bool>(
+            stream: _homeController.outputSortOrder,
+            initialData: _homeController.isAscending,
+            builder: (context, snapshot) {
+              return IconButton(
+                onPressed: () {
+                  _homeController.toggleSortOrder();
+                },
+                icon: Icon(
+                  snapshot.data == true
+                      ? Icons.arrow_upward
+                      : Icons.arrow_downward,
+                  color: ColorManger.kPrimaryColor,
+                ),
+              );
+            },
+          ),
+        ],
         title: Padding(
           padding: const EdgeInsets.all(8.0),
           child: const Text(
@@ -54,9 +73,16 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: () async {
             _homeController.getAllDataNote();
           },
-          child: CustomGridViewNotesBody(
-            outPutListNoteModel: _homeController.outputNote,
-            onTapAtNote: _homeController.onTapAtItemNote,
+          child: StreamBuilder<bool>(
+            stream: _homeController.outputSortOrder,
+            initialData: _homeController.isAscending,
+            builder: (context, snapshot) {
+              return CustomGridViewNotesBody(
+                isAscending: snapshot.data ?? true,
+                outPutListNoteModel: _homeController.outputNote,
+                onTapAtNote: _homeController.onTapAtItemNote,
+              );
+            }
           ),
         ),
       ),

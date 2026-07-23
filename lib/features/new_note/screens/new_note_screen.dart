@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/controller/new_note_controller/new_note_controller.dart';
+import 'package:note_app/core/resources/color_manger.dart';
 import 'package:note_app/features/new_note/widgets/custom_app_bar_new_screen.dart';
 import 'package:note_app/features/new_note/widgets/custom_text_filed_desc_note.dart';
 import 'package:note_app/features/new_note/widgets/custom_text_filed_title_note.dart';
@@ -43,18 +44,28 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: StreamBuilder<bool?>(
             stream: _controller.outPutEditStatus,
-            builder: (context, snapshot) {
-              return Column(
-                children: [
-                  CustomTextFiledTitleNote(
-                   active: snapshot.data,
-                    titlecontroller: _controller.titlecontroller,
-                  ),
-                  Expanded(child: CustomTextFiledDescNote(
-                    active: snapshot.data,
-                    desccontroller: _controller.desccontroller,
-                  )),
-                ],
+            builder: (context, editSnapshot) {
+              return StreamBuilder<Color>(
+                stream: _controller.outPutTextColor,
+                initialData: ColorManger.kLightGreyColor2,
+                builder: (context, colorSnapshot) {
+                  return Column(
+                    children: [
+                      CustomTextFiledTitleNote(
+                        active: editSnapshot.data,
+                        titlecontroller: _controller.titlecontroller,
+                        textColor: colorSnapshot.data ?? Colors.black,
+                      ),
+                      Expanded(
+                        child: CustomTextFiledDescNote(
+                          active: editSnapshot.data,
+                          desccontroller: _controller.desccontroller,
+                          textColor: colorSnapshot.data ?? Colors.black,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               );
             }
           ),
