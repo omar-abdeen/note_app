@@ -1,3 +1,8 @@
 {
-    "cmake.sourceDirectory": "E:/note_app/linux"
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "cmake.sourceDirectory": "E:/note_app/linux",
+    "editor.formatOnSave": true,
+    "dart.lineLength": 80
 }
